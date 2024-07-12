@@ -23,10 +23,24 @@ def load_json(file_path):
         print("File not found")
         sys.exit(1)
 
+def save_json(file_path, data):
+    try:
+        with open(file_path, 'w') as file:
+            json.dump(data, file, indent=4)
+        print(f"Data saved to {file_path}")
+    except Exception as e:
+        print(f"Error saving file: {e}")
+        sys.exit(1)
+
 if __name__ == "__main__":
     input_file, output_file = parse_arguments()
     if input_file.endswith('.json'):
         data = load_json(input_file)
+    else:
+        print("Unsupported file format")
+        sys.exit(1)
+    if output_file.endswith('.json'):
+        save_json(output_file, data)
     else:
         print("Unsupported file format")
         sys.exit(1)
